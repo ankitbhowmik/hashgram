@@ -1,0 +1,8 @@
+.a-logo{
+    font-family: 'Brush Script MT', Courier, monospace;
+    font-size: 2.5em;
+    margin:0 5px 0 0;
+}
+.a-logo:hover{
+    cursor: pointer;
+}
