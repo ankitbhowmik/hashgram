@@ -5,4 +5,13 @@ export default {
     title: "template/Profile"
 }
 
-export const DefProfile = ()=> <Profile />
+const imgPosts = [
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+    {image: "http://localhost:6006/post.png", alt:"ankit"},
+]
+
+export const DefProfile = ()=> <Profile imgPosts={imgPosts}/>

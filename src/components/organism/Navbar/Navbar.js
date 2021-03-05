@@ -31,7 +31,7 @@ const Navbar = () => {
         <FlexBox style={{padding:0, margin:"0 auto"}} plain className="a-container">
             <Logo>HashGram</Logo>
             <CenterDiv>
-                <TextInput style={{textAlign:"center"}} plain placeholder="search"/>
+                <TextInput style={{margin:"0 auto"}} plain placeholder="search"/>
             </CenterDiv>
             <NavbarLeftItems/>
         </FlexBox>

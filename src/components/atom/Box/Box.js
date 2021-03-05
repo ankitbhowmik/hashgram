@@ -1,11 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Box = styled.div`
-    padding: 5px;
-    border: 0.5px solid gray;
+    padding: ${props => props.padding || 5};
+    border: 0.5px solid lightgray;
     background-color: white;
     border-radius: 1px;
-    text-align: ${props => props.textAlign || "center" }
+    text-align: ${props => props.textAlign || "center" };
+    width: ${props=> props.width || "auto"};
 `;
 
 export default Box;

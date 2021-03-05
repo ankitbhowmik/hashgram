@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './logo.css';
 
-const Logo = ({children}) => {
+const Logo = ({children, ...props}) => {
     return (
-        <h1 className="a-logo">{children}</h1>
+        <h1 {...props} className="a-logo">{children}</h1>
     )
 }
 

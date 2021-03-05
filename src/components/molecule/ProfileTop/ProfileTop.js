@@ -24,7 +24,7 @@ const TextSmall = styled.span`
 
 const ProfileTop = ({image, posts, followers, following}) => {
     return (
-        <Grid col="1fr 3fr 1fr">
+        <Grid col="1fr 3fr 1fr" style={{alignItems:"center", justifyItems:"center"}}>
             <Avatar 
                 size="large"
                 image={image}

@@ -16,12 +16,16 @@ const ImageDiv = styled.div`
     width: 598px;
     max-height: 598px;
     background-color:lightgray;
+    overflow: hidden;
+    background-color:white;
 `
 
 const NameDiv = styled.div`
     height: 60px;
     width: 100%;
     position: relative;
+    background-color:white;
+    border-bottom:0.5px solid lightgray;
 `
 
 const NameText = styled.span`

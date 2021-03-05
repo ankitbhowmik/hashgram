@@ -9,5 +9,6 @@ const Template = (args) => <TextInput {...args}/>
 
 export const SimpleInput = Template.bind({});
 SimpleInput.args = {
-    placeholder: "this is simple input"
+    placeholder: "this is simple input",
+    label: "sample label"
 }
