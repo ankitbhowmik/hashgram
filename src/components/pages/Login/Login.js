@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import Grid from '../../atom/Box/Grid'
 import LoginForm from '../../molecule/LoginForm/LoginForm'
 import ResponsiveImg from '../../atom/ResponsiveImg/ResponsiveImg'
-import Footer from '../../organism/Footer/Footer'
 import Box from '../../atom/Box/Box'
+import { Link } from 'react-router-dom'
 
 const LeftDiv = styled.div`
     height: 600px;
@@ -19,19 +19,18 @@ const RightDiv = styled.div`
 const Login = () => {
     return (
         <div className="a-container">
-            <Grid alignItems="center">
+            <Grid alignItems="center" mt="50px">
                 <LeftDiv>
-                    <ResponsiveImg src="http://localhost:6006/iphonex.png"/>
+                    <ResponsiveImg src="/iphonex.png"/>
                 </LeftDiv>
                 <RightDiv>
                     <LoginForm/>
                     <br/>
                     <Box padding="15px" >
-                        dont't have a account sign up <a href="#">signup</a>
+                        dont't have a account sign up <Link to="/signup">signup</Link>
                     </Box>
                 </RightDiv>
             </Grid>
-            <Footer/>
         </div>
     )
 }

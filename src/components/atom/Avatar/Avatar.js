@@ -1,4 +1,3 @@
-import AvatarStories from "./Avatar.stories";
 import styled, {css} from 'styled-components';
 
 const Avatar = styled.div`
@@ -7,19 +6,19 @@ const Avatar = styled.div`
     display: inline-block;
     border:1px solid;
     ${
-        props => props.size && props.size=="small" && css`
+        props => props.size && props.size==="small" && css`
             width: 50px;
             height: 50px;
         `
     }
     ${
-        props => props.size && props.size=="medium" && css`
+        props => props.size && props.size==="medium" && css`
             width: 100px;
             height: 100px;
         `
     }
     ${
-        props => props.size && props.size=="large" && css`
+        props => props.size && props.size==="large" && css`
             width: 150px;
             height: 150px;
         `

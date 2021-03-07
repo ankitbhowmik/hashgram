@@ -1,0 +1,5 @@
+export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
+export const HIDE_NOTIFICATION = "HIDE_NOTICATION";
+export const TOGGLE_NOTIFICATION = "TOGGLE_NOTIFICATION"
+
+export const toggleNotification = ()=> ({type: TOGGLE_NOTIFICATION});

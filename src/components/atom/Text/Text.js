@@ -8,6 +8,7 @@ export const H1 = styled.h1`
 export const P = styled.p`
     font-size: ${props => props.size || 16};
     color: ${props => props.color || "black"};
+    margin: ${props => props.m || "16px 0"};
 `
 export const Span = styled.span`
     font-size: ${props => props.size};

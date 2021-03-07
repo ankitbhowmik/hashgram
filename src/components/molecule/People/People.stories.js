@@ -7,6 +7,6 @@ export default {
 
 export const DefPeople = ()=> <People/>
 
-export const ImagePeople = ()=> <People name="ankit" username="ankit.bhowmik" image={"http://localhost:6006/DSC_0011.JPG"}/>
+export const ImagePeople = ()=> <People button={{name:"follow"}} name="ankit" username="ankit.bhowmik" image={"/DSC_0011.JPG"}/>
 
 export const LoadingPeople = ()=> <People loading={true}/>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Avatar from '../../atom/Avatar/Avatar'
 import ResponsiveImg from '../../atom/ResponsiveImg/ResponsiveImg'
 import Rectangle from '../../atom/Skeleton/Rectangle'
-import { P } from '../../atom/Text/Text'
+import { P, Span } from '../../atom/Text/Text'
 import PropTypes from 'prop-types'
 
 const Border = styled.div`
@@ -68,9 +68,9 @@ const Post = ({loading, image, name, username, caption}) => {
                         />
                         <NameText>
                             {name} <br/> 
-                            <span style={{color:"gray"}}>
+                            <Span color="gray">
                                 {username}
-                            </span>
+                            </Span>
                         </NameText>
                     </NameDiv>
                     <ImageDiv>

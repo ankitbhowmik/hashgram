@@ -2,13 +2,11 @@ import styled from "styled-components";
 import { css } from "styled-components";
 import PropsTypes from "prop-types";
 
-const StyledTextInput = styled.input.attrs(props=> {
-    console.log(props);
-    return ({
+const StyledTextInput = styled.input.attrs(props=> ({
         type: props.type || "text", 
         ...props
     })
- } )`
+)`
     padding: 3px 10px;
     border-radius: 3px;
     border: 1px solid lightgrey;
@@ -31,7 +29,7 @@ const TextInput = ({label, name, ...props}) => {
 }
 
 TextInput.propTypes = {
-    label: PropsTypes.string.isRequired
+    label: PropsTypes.string
 }
 
 export default TextInput;

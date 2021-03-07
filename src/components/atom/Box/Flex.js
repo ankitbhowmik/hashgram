@@ -11,6 +11,7 @@ const FlexBox = styled(Box)`
             background-color: none;
         `
     }
+    justify-content: ${props=> props.justifyContent || "flex-start"};
 `
 
 export default FlexBox;

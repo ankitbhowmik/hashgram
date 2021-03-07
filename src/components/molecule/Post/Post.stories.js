@@ -15,5 +15,7 @@ LoadingPost.args = {
 export const SomePost = Template.bind({});
 SomePost.args = {
     loading: false,
-    image: "http://localhost:6006/post.png"
+    image: "http://localhost:6006/post.png",
+    name: "ankit",
+    username: "ankit.bhowmik"
 }

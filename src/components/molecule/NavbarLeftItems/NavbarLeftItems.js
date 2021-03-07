@@ -6,6 +6,9 @@ import Home from '../../atom/Icons/Home/Home';
 import Message from '../../atom/Icons/Message/Message';
 import Like from '../../atom/Icons/Like/Like';
 import Profile from '../../atom/Icons/Profile/Profile';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toggleNotification } from '../../../redux/Notification/Notification.type';
 
 const StyledFlexBox = styled(FlexBox)`
     width: 190px;
@@ -14,12 +17,22 @@ const StyledFlexBox = styled(FlexBox)`
 `
 
 const NavbarLeftItems = () => {
+    const {url} = useRouteMatch();
+    const dispatch = useDispatch();
     return (
         <StyledFlexBox plain={true}>
-            <Home/>
-            <Message/>
-            <Like/>
-            <Profile/>
+            <Link to={`${url}/home`}> 
+                <Home/> 
+            </Link>
+            <Link to={`${url}/message`}> 
+                <Message/> 
+            </Link>
+            
+            <Like onClick={()=> dispatch(toggleNotification())}/> 
+
+            <Link to={`${url}/profile`}> 
+                <Profile/> 
+            </Link>
         </StyledFlexBox>
     )
 }

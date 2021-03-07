@@ -31,8 +31,9 @@ const ProfileTop = ({image, posts, followers, following}) => {
             />
             <RightDiv>
                 <div>
-                    <Text>UserName</Text>
-                    <Button color="gray">Edit Profile</Button>
+                    <Text>UserName</Text> &nbsp;
+                    <Button color="primary">Edit Profile</Button>
+                    <Button color="gray" style={{float:"right"}}>Logout</Button>
                 </div>
                 <FlexBox plain style={{justifyContent: "space-between"}}>
                     <TextSmall>{posts} Posts</TextSmall>

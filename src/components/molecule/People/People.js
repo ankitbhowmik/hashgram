@@ -6,6 +6,7 @@ import Profile from '../../atom/Icons/Profile/Profile';
 import styled from 'styled-components';
 import Button from '../../atom/button/Button';
 import Rectangle from '../../atom/Skeleton/Rectangle';
+import { P } from '../../atom/Text/Text';
 
 const RelativeFlexBox = styled(FlexBox)`
     position:relative;
@@ -48,13 +49,13 @@ const LoadingPeople = ()=> (
     </RelativeFlexBox>
 )
 
-const People = ({loading, image, name, username}) => {
+const People = ({loading, image, name, username, button, style}) => {
     if(loading){
         return (<LoadingPeople/>)
     }
 
     return (
-        <RelativeFlexBox plain direction="row">
+        <RelativeFlexBox style={style} plain direction="row">
             <div>
                 {
                     image 
@@ -63,12 +64,11 @@ const People = ({loading, image, name, username}) => {
                 }   
                 <StyledText>
                     {name}
-                    <br/>
-                    {username}
-                </StyledText> 
+                    <P color="gray" m="0">{username}</P>
+                </StyledText>
             </div>
             <div>
-                <Button>Follow</Button>
+               { button && <Button {...button}>{button.name}</Button> }
             </div>  
         </RelativeFlexBox>
     )
@@ -78,6 +78,7 @@ People.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
     username: PropTypes.string,
+    button: PropTypes.object,
 }
 
 People.defaultProps = {
