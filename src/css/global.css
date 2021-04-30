@@ -20,3 +20,10 @@ body{
 .center-text{
     text-align:center;
 }
+
+.a-add-post-icon{
+    display:block;
+    transform: scale(2.5);
+    margin: 20px auto;
+    cursor:pointer;
+}

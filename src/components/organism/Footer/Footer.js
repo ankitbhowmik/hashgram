@@ -1,13 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const CenterText = styled.p`
-    text-align:center;
-    color:gray;
-    font-size:1rem;
-    border-top:1px solid gray;
-    padding:16px;
-`
+import {CenterText} from './Footer.style';
 
 const Footer = () => {
     return (

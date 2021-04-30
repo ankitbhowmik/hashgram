@@ -1,20 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import FlexBox from '../../atom/Box/Flex';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import Home from '../../atom/Icons/Home/Home';
 import Message from '../../atom/Icons/Message/Message';
 import Like from '../../atom/Icons/Like/Like';
 import Profile from '../../atom/Icons/Profile/Profile';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { toggleNotification } from '../../../redux/Notification/Notification.type';
 
-const StyledFlexBox = styled(FlexBox)`
-    width: 190px;
-    justify-content:space-evenly;
-    align-self:center;
-`
+import Notification from '../../organism/Notification/Notification';
+
+import {StyledFlexBox,
+    AbsoluteNotification,
+    RelativeDiv} from './NavbarLeftItems.style';
 
 const NavbarLeftItems = () => {
     const {url} = useRouteMatch();
@@ -28,7 +27,12 @@ const NavbarLeftItems = () => {
                 <Message/> 
             </Link>
             
-            <Like onClick={()=> dispatch(toggleNotification())}/> 
+            <RelativeDiv>
+                <Like onClick={()=> dispatch(toggleNotification())}/> 
+                <AbsoluteNotification>
+                    <Notification/>
+                </AbsoluteNotification>
+            </RelativeDiv>
 
             <Link to={`${url}/profile`}> 
                 <Profile/> 

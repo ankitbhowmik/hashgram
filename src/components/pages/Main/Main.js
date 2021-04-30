@@ -1,6 +1,7 @@
 import React from 'react'
-import Navbar from '../../organism/Navbar/Navbar'
 import { Switch, Route, useRouteMatch } from 'react-router-dom'
+
+import Navbar from '../../organism/Navbar/Navbar'
 import Home from '../../template/Home/Home'
 import Profile from '../../template/Profile/Profile';
 import Message from '../../template/Message/Message';
@@ -30,6 +31,7 @@ const imgPosts = [
 //remove people=peoples, posts=postss as it is to mock data
 const Main = ({people=peoples, posts=postss}) => {
     const {path} = useRouteMatch();
+
     return (
         <>
             <Navbar/>
@@ -41,11 +43,8 @@ const Main = ({people=peoples, posts=postss}) => {
                 <Route path={`${path}/profile`}>
                     <Profile imgPosts={imgPosts}/>
                 </Route>
-                <Route>
+                <Route path={`${path}/message`}>
                     <Message/>
-                </Route>
-                <Route path="/">
-                    <h1> hello </h1>
                 </Route>
             </Switch>
         </>

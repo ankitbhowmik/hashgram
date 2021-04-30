@@ -1,29 +1,24 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import React from 'react';
 import PropsTypes from "prop-types";
+import {useField} from 'formik';
 
-const StyledTextInput = styled.input.attrs(props=> ({
-        type: props.type || "text", 
-        ...props
-    })
-)`
-    padding: 3px 10px;
-    border-radius: 3px;
-    border: 1px solid lightgrey;
-    display: block;
-    ${
-        props=> !props.plain && css`
-            min-height: 2.9em;
-            width: 100%;
-        `
-    }
-`
+import {StyledTextInput} from './TextInput.style';
+import {P} from "../Text/Text";
 
-const TextInput = ({label, name, ...props}) => {
+const TextInput = ({label, ...props}) => {
+    const [field, meta] = useField(props);
     return (
         <>
-            {label && <label htmlFor={name || label}>{label}</label>}
-            <StyledTextInput {...props}/>
+            {label && <label htmlFor={props.name || label}>{label}</label>}
+            <StyledTextInput 
+                {...props}
+                {...field}
+            />
+            {
+                meta.touched
+                && meta.error
+                && <P color="red">{meta.error}</P> 
+            }
         </>
     )
 }

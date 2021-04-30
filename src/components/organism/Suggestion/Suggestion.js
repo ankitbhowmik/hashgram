@@ -11,8 +11,8 @@ const Suggestion = ({people}) => {
         <>
             <H1 color="gray" size={20}>Suggestions for you </H1>
             {
-                people.map(({image, name, username})=> (
-                    <People image={image} name={name} username={username} button={button}/>
+                people.map(({image, name, username}, index)=> (
+                    <People key={index} image={image} name={name} username={username} button={button}/>
                 ))
             }
         </>

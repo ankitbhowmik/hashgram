@@ -1,29 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
-import Box from '../../atom/Box/Box'
-import Like from '../../atom/Icons/Like/Like'
-import PropTypes from 'prop-types';
+
 import { useSelector } from 'react-redux';
 
-const StyledBox = styled(Box)`
-    position: relative;
-    border-radius: 5px;
-    padding: 30px;
-    display:${props => props.show ? "block" : "none"};
-    z-index:10;
-`
+import Like from '../../atom/Icons/Like/Like'
+import PropTypes from 'prop-types';
 
-const Triangle = styled.div`
-    height: 14px;
-    width: 14px;
-    background-color: white;
-    border-left: 1px solid lightgrey;
-    border-bottom: 1px solid lightgray;
-    transform: rotate(135deg);
-    position:absolute;
-    right: 80px;
-    top: -8px;
-`
+import {StyledBox,
+    Triangle} from './Notification.style';
 
 const EmptyNotification = ()=>{
     return (

@@ -1,39 +1,35 @@
 import React from 'react';
-import FlexBox from '../../atom/Box/Flex';
-import Button from '../../atom/button/Button';
-import styled from 'styled-components';
-import Grid from '../../atom/Box/Grid';
-import Avatar from '../../atom/Avatar/Avatar';
 import PropTypes from 'prop-types';
 
-const RightDiv = styled.div`
-    flex-grow:1;
-    width: 400px;
-    &>*{
-        margin-bottom:10px;
-    }
-`
+import {useDispatch} from 'react-redux';
 
-const Text = styled.span`
-    font-size:1.6em;
-`
+import FlexBox from '../../atom/Box/Flex';
+import Button from '../../atom/button/Button';
+import Grid from '../../atom/Box/Grid';
+import Avatar from '../../atom/Avatar/Avatar';
 
-const TextSmall = styled.span`
-    font-size:1em;
-`
+import {RightDiv, Text, TextSmall} from './ProfileTop.style';
 
-const ProfileTop = ({image, posts, followers, following}) => {
+const ProfileTop = ({image, posts, followers, following, username}) => {
+    const dispatch = useDispatch();
+
     return (
         <Grid col="1fr 3fr 1fr" style={{alignItems:"center", justifyItems:"center"}}>
             <Avatar 
                 size="large"
-                image={image}
+                image={image || "/noPic.png"}
             />
             <RightDiv>
                 <div>
-                    <Text>UserName</Text> &nbsp;
+                    <Text>{username}</Text> &nbsp;
                     <Button color="primary">Edit Profile</Button>
-                    <Button color="gray" style={{float:"right"}}>Logout</Button>
+                    <Button 
+                        color="gray" 
+                        style={{float:"right"}}
+                        onClick={ ()=> dispatch({type:"LOGOUT_REQUEST"})}
+                    >
+                        Logout
+                    </Button>
                 </div>
                 <FlexBox plain style={{justifyContent: "space-between"}}>
                     <TextSmall>{posts} Posts</TextSmall>

@@ -16,8 +16,10 @@ const Home = ({posts, people}) => {
             <Grid col="3fr 2fr">
                 <div style={{padding:"10px"}}>
                     {
-                        posts.map(({loading, image, name, username, caption})=>(
-                            <Post loading={loading} 
+                        posts.map(({loading, image, name, username, caption}, index)=>(
+                            <Post 
+                                key={index}
+                                loading={loading} 
                                 image={image} 
                                 name={name} 
                                 username={username} 
