@@ -10,6 +10,7 @@ const Button = styled.button`
     font-size: 0.9em;
     width: ${props=> props.width || "auto"};
     opacity: ${props=> props.disabled ? "0.3" : 1};
+    margin: ${props=> props.margin ? props.margin : 0};
     &:hover{
         cursor:pointer;
     }

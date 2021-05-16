@@ -1,8 +1,8 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
-import {Formik, Form} from 'formik'
+import { Formik, Form } from 'formik'
 import * as yup from 'yup'
 
 import TextInput from '../../atom/TextInput/TextInput'
@@ -11,6 +11,7 @@ import Button from '../../atom/button/Button'
 import styled from 'styled-components'
 import Box from '../../atom/Box/Box'
 import Alert from '../../atom/Alert/Alert'
+import { USER_SAGA_FETCH } from '../../../redux/user/user.type'
 
 export const LoginBox = styled(Box)`
     padding:25px 55px;
@@ -26,8 +27,8 @@ export const LoginBox = styled(Box)`
 `
 
 const initialValues = {
-    email:"",
-    password:"",
+    email: "",
+    password: "",
 }
 
 const validationSchema = yup.object({
@@ -38,45 +39,45 @@ const validationSchema = yup.object({
 //main component
 const LoginForm = () => {
     const dispatch = useDispatch();
-    const {error, userId} = useSelector( state => state.user );
+    const { error, userId } = useSelector(state => state.user);
 
-    const onSubmit = (data)=>{
-        dispatch({type: "FETCH_USER", data});
+    const onSubmit = (data) => {
+        dispatch({ type: USER_SAGA_FETCH, data });
     }
 
-    if(userId) return <Redirect to="/acc/home"/>
+    if (userId) return <Redirect to="/acc/home" />
 
     return (
         <LoginBox>
-        <Logo>Hashgram</Logo>
-        { error && <Alert variant="danger">{error}</Alert> }
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-        >
-            <Form style={{textAlign:"left"}}>
-                <TextInput 
-                    name="email" 
-                    label="enter email"
-                    placeholder="example@you.com"
-                />
-                <TextInput 
-                    name="password" 
-                    type="password"
-                    label="enter password" 
-                    placeholder="my password"
-                />
-                <Button
-                    type="submit"
-                    width="260px">
-                    Login
+            <Logo>Hashgram</Logo>
+            { error && <Alert variant="danger">{error}</Alert>}
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                <Form style={{ textAlign: "left" }}>
+                    <TextInput
+                        name="email"
+                        label="enter email"
+                        placeholder="example@you.com"
+                    />
+                    <TextInput
+                        name="password"
+                        type="password"
+                        label="enter password"
+                        placeholder="my password"
+                    />
+                    <Button
+                        type="submit"
+                        width="260px">
+                        Login
                 </Button>
-            </Form>
-        </Formik>
-        
-        <p>forgot password</p>
-    </LoginBox>
+                </Form>
+            </Formik>
+
+            <p>forgot password</p>
+        </LoginBox>
     )
 }
 

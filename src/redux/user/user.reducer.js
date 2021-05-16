@@ -1,50 +1,70 @@
 import {
-	FETCH_USER_DATA,
-	FETCH_USER_SUCCESS,
-	FETCH_USER_FAIL,
-	LOGOUT} from './user.type.js';
+	USER_FETCH_DATA,
+	USER_FETCH_SUCCESS,
+	USER_FETCH_FAIL,
+	USER_LOGOUT,
+	USER_SET_PROFILE_IMAGE,
+	USER_SET_EDIT_PROFILE
+} from './user.type.js';
 
 const initialState = {
-	loading:true,
-	error:null,
-	userId:"",
-	fullname:"",
-	email:"",
-	profileImage:"",
+	email: "",
+	userId: "",
+	error: null,
+	loading: true,
+	fullname: "",
+	profileImage: "",
+	followings:0,
+	followers:0,
+	posts:0,
+	bio:"",
 }
 
-const userReducer = (state=initialState, action)=>{
-	switch(action.type){
-		case FETCH_USER_DATA:
+const userReducer = (state = initialState, action) => {
+	switch (action.type) {
+		case USER_FETCH_DATA:
 			return {
-				...state, 
-				loading:true
+				...state,
+				loading: true
 			}
-		case FETCH_USER_SUCCESS:
+		case USER_FETCH_SUCCESS:
 			return {
-				loading:false,
-				error:null,
-				userId:action.payload._id,
-				fullname: action.payload.fullname,
+				...state,
+				error: null,
+				loading: false,
+				bio: action.payload.bio,
+				userId: action.payload._id,
+				posts: action.payload.posts,
 				email: action.payload.email,
-				profileImage: action.payload.profileImage
+				fullname: action.payload.fullname,
+				followers: action.payload.followers,
+				followings: action.payload.followings,
+				profileImage: action.payload.profileImage,
 			}
-		case FETCH_USER_FAIL:
+		case USER_FETCH_FAIL:
 			return {
-				...state, 
-				loading:false, 
-				error:action.payload
+				...state,
+				loading: false,
+				error: action.payload
 			}
-		case LOGOUT:
+		case USER_LOGOUT:
 			return {
-				loading:false,
-				error:null,
-				userId:"",
-				fullname:"",
-				email:"",
-				profileImage:"",
+				...initialState,
+				loading: false,
 			}
-		default :
+		case USER_SET_PROFILE_IMAGE: 
+			return {
+				...state,
+				profileImage: `${process.env.REACT_APP_HOST_URL}${action.value}`
+			}
+		case USER_SET_EDIT_PROFILE :
+			return{
+				...state,
+				bio: action.bio,
+				fullname: action.fullname,
+				email: action.email,
+			}
+		default:
 			return state
 	}
 }

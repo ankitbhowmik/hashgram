@@ -1,64 +1,46 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 
-import {useSelector} from 'react-redux'
-
-import ProfileTop from '../../molecule/ProfileTop/ProfileTop'
-import PropTypes from 'prop-types';
-import SinglePostImg from '../../molecule/SinglePostImg/SinglePostImg'
 import Grid from '../../atom/Box/Grid';
 import Add from '../../atom/Icons/Add/Add';
-import AddPostModal from '../../organism/AddPostModal/AddPostModal';
+import ProfileTop from '../../molecule/ProfileTop/ProfileTop';
+import SinglePostImg from '../../molecule/SinglePostImg/SinglePostImg';
+import AddPostModal from '../../modals/AddPostModal/AddPostModal';
 
-//will need redux state
-const posts = 1;
-const followers = 0;
-const following = 1;
+import { POST_SAGA_GET_POSTS } from '../../../redux/post/post.type';
 
-const Profile = ({imgPosts}) => {
+const Profile = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: POST_SAGA_GET_POSTS });
+    }, [dispatch])
+
+    const { posts } = useSelector(state => state.post);
+
     const [modalIsOpen, setIsOpen] = useState(false);
-
-    const {
-        loading, 
-        error, 
-        userId, 
-        fullname, 
-        email, 
-        profileImage
-    } = useSelector(state=> state.user);
 
     return (
         <div className="a-container m-auto">
-            <ProfileTop
-                style={{margin:"0 auto"}}
-                image={profileImage} 
-                posts={posts} 
-                followers={followers} 
-                following={following}
-                username={fullname}
+            <ProfileTop style={{ margin: "0 auto" }} />
+            <br />
+            <Add
+                className="a-add-post-icon"
+                onClick={() => setIsOpen(true)}
             />
-            <br/>
-            <Add 
-                className="a-add-post-icon" 
-                onClick={()=> setIsOpen(true)}
+            <AddPostModal
+                modalIsOpen={modalIsOpen}
+                closeModal={() => setIsOpen(false)}
             />
-            <AddPostModal 
-                modalIsOpen={modalIsOpen} 
-                closeModal={()=>setIsOpen(false)}
-            />
-            <hr/>
-            <Grid col="1fr 1fr 1fr" style={{justifyItems:"center", rowGap:20}}>
+            <hr />
+            <Grid col="1fr 1fr 1fr" style={{ justifyItems: "center", rowGap: 20 }}>
                 {
-                    imgPosts && imgPosts.map(({image, alt}, index)=>(
-                        <SinglePostImg key={index} image={image} al={alt}/>
+                    posts && posts.map((post) => (
+                        <SinglePostImg key={post._id} image={`${process.env.REACT_APP_HOST_URL}/${post.image}`} alt={post.image} />
                     ))
                 }
             </Grid>
         </div>
     )
-}
-
-Profile.propTypes = {
-    imgPosts : PropTypes.array.isRequired
 }
 
 export default Profile

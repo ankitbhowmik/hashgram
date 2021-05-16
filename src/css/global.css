@@ -27,3 +27,30 @@ body{
     margin: 20px auto;
     cursor:pointer;
 }
+
+.a-custom-file-input{
+  max-width:150px;
+}
+.a-custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.a-custom-file-input::before {
+  content: 'Change Photo';
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.a-custom-file-input:hover::before {
+  border-color: black;
+}
+.a-custom-file-input:active::before {
+}
+.a-icon:hover{
+  cursor:pointer;
+}

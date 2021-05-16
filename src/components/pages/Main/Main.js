@@ -14,34 +14,18 @@ const peoples = [
     {image: "/DSC_0011.JPG", name:"lens", username:"lenscart"}
 ];
 
-const postss = [
-    {image:"/post.png", name:"Ankit", username: "ankit.bhowmik", caption:"feeling owesome"},
-    {image:"/DSC_0011.JPG", name:"Ankit", username: "ankit.bhowmik"}
-]
-
-const imgPosts = [
-    {image: "/post.png", alt:"ankit"},
-    {image: "/post.png", alt:"ankit"},
-    {image: "/post.png", alt:"ankit"},
-    {image: "/post.png", alt:"ankit"},
-    {image: "/post.png", alt:"ankit"},
-    {image: "/post.png", alt:"ankit"},
-]
-
-//remove people=peoples, posts=postss as it is to mock data
-const Main = ({people=peoples, posts=postss}) => {
+const Main = ({people=peoples}) => {
     const {path} = useRouteMatch();
-
     return (
         <>
             <Navbar/>
             <br/>
             <Switch>
                 <Route path={`${path}/home`}>
-                    <Home people={people} posts={posts}/>
+                    <Home people={people}/>
                 </Route>
                 <Route path={`${path}/profile`}>
-                    <Profile imgPosts={imgPosts}/>
+                    <Profile />
                 </Route>
                 <Route path={`${path}/message`}>
                     <Message/>

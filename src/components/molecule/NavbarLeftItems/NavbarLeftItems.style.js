@@ -7,7 +7,7 @@ export const StyledFlexBox = styled(FlexBox)`
     align-self:center;
 `
 
-export const AbsoluteNotification = styled.div`
+export const AbsoluteDiv = styled.div`
     position:absolute;
     top: 50px;
     right: -74px;

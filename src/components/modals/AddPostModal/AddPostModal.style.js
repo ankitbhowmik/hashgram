@@ -19,3 +19,9 @@ export const CloseIcon = styled.span`
     float: right;
     cursor: pointer; 
 `
+
+export const ImagePost = styled.img`
+    height: 100%;
+    width:auto;
+    object-fit: cover;
+`

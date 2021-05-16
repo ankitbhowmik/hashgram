@@ -1,46 +1,53 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+
 import Grid from '../../atom/Box/Grid'
 import styled from 'styled-components'
 import Suggestion from '../../organism/Suggestion/Suggestion'
-import PropTypes from 'prop-types'
-import Post from '../../molecule/Post/Post'
+import Post from '../../organism/Post/Post';
+
+import { POST_SAGA_GET_HOME_POSTS } from '../../../redux/post/post.type';
 
 const StickyDiv = styled.div`
     position: sticky;
-    top: 0;
+    top: 5em;
 `
 
-const Home = ({posts, people}) => {
+const Home = ({ people }) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({ type: POST_SAGA_GET_HOME_POSTS });
+    }, [dispatch])
+
+    const { homePosts } = useSelector(state => state.post);
+
     return (
         <div className="a-container">
             <Grid col="3fr 2fr">
-                <div style={{padding:"10px"}}>
+                <div style={{ padding: "10px" }}>
                     {
-                        posts.map(({loading, image, name, username, caption}, index)=>(
-                            <Post 
-                                key={index}
-                                loading={loading} 
-                                image={image} 
-                                name={name} 
-                                username={username} 
-                                caption={caption}
+                        homePosts.map((data, index) => (
+                            <Post
+                                key={data._id}
+                                post_id={data._id}
+                                likes={data.likes}
+                                comments={data.comments}
+                                image={data.image}
+                                caption={data.caption}
+                                author={data.author}
                             />
                         ))
                     }
                 </div>
-                <div>
+                <div style={{ height: "100%" }}>
                     <StickyDiv>
-                        <Suggestion people={people}/>
+                        <Suggestion people={people} />
                     </StickyDiv>
                 </div>
             </Grid>
         </div>
     )
-}
-
-Home.propTypes = {
-    posts: PropTypes.array,
-    suggestions: PropTypes.array,
 }
 
 export default Home
