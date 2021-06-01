@@ -43,8 +43,8 @@ function* verifyToken() {
 	yield put({ type: USER_FETCH_DATA });
 	const verifyToken = yield call(axios.get, url.verifyToken, { withCredentials: true });
 	const { auth, data } = verifyToken.data;
-	if(auth === "success") yield put({ type: USER_FETCH_SUCCESS, payload: data }); 
-	else if(auth === "fail") yield put({ type: USER_FETCH_FAIL, payload: "" });
+	if (auth === "success") yield put({ type: USER_FETCH_SUCCESS, payload: data });
+	else if (auth === "fail") yield put({ type: USER_FETCH_FAIL, payload: "" });
 	else yield put({ type: USER_FETCH_FAIL, payload: "SOME SERVER ERROR OCCURED" });
 }
 

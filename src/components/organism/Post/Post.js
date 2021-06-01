@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import ResponsiveImg from '../../atom/ResponsiveImg/ResponsiveImg'
 //import Rectangle from '../../atom/Skeleton/Rectangle'
 import { P, Span } from '../../atom/Text/Text'
-import CommentBox from '../../molecule/CommentBox/CommentBox'
+import CommentBox from '../../molecule/LikeComment/LikeComment'
 import ViewPostModal from '../../modals/ViewPostModal/ViewPostModal'
 
 import {
@@ -51,9 +51,9 @@ const Post = ({ post_id, likes, comments, image, caption, author }) => {
 
             <CommentBox post_id={post_id} likes={likes} comments={comments}>
                 <P m="0">{caption}</P>
-                <P color="gray" m="0" onClick={()=> setShowViewModal(true)}>View all {comments.length} comments</P>
+                <P color="gray" m="0" onClick={() => setShowViewModal(true)}>View all {comments.length} comments</P>
             </CommentBox>
-            <ViewPostModal modalIsOpen={showViewModal} closeModal={()=> setShowViewModal(false)}/>
+            <ViewPostModal modalIsOpen={showViewModal} closeModal={() => setShowViewModal(false)} />
         </Border>
     )
 }
