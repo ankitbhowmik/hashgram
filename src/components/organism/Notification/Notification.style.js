@@ -17,6 +17,6 @@ export const Triangle = styled.div`
     border-bottom: 1px solid lightgray;
     transform: rotate(135deg);
     position:absolute;
-    right: 80px;
+    right: ${props => props.right};
     top: -8px;
 `

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledDiv = styled.div`
     height:51px;
     user-select:none;
+    position:relative;
 `
 
 export const CenterDiv = styled.div`

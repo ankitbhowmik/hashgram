@@ -28,6 +28,7 @@ export const NameText = styled.span`
     transform: translateY(-50%);
     top: 50%;
     left: 70px;
+    cursor:pointer;
 `
 
 export const StyledAvatar = styled(Avatar)`

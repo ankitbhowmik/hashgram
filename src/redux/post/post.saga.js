@@ -1,34 +1,35 @@
-import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
 
 import url from '../../constant/url';
+import { all, takeLatest, call, put, select } from 'redux-saga/effects';
 
 import {
-	POST_SAGA_GET_POSTS,
-	POST_SAGA_GET_HOME_POSTS,
-	POST_SAGA_CHANGE_LIKE,
-	POST_SAGA_ADD_COMMENTS,
+	POST_FETCH_FAIL,
 	POST_FETCH_DATA,
 	POST_FETCH_SUCCESS,
-	POST_FETCH_FAIL,
-	HOME_POST_FETCH_SUCCESS,
-	HOME_POST_FETCH_FAIL,
 	POST_SET_HOME_POST,
+	POST_SAGA_GET_POSTS,
+	HOME_POST_FETCH_FAIL,
+	POST_SAGA_CHANGE_LIKE,
+	POST_SAGA_ADD_COMMENTS,
+	HOME_POST_FETCH_SUCCESS,
+	POST_SAGA_GET_HOME_POSTS,
 } from './post.type.js';
 
 export function* postWatcher() {
 	yield all([
 		takeLatest(POST_SAGA_GET_POSTS, getPosts),
-		takeLatest(POST_SAGA_GET_HOME_POSTS, getHomePosts),
 		takeLatest(POST_SAGA_CHANGE_LIKE, changeLike),
 		takeLatest(POST_SAGA_ADD_COMMENTS, addComment),
+		takeLatest(POST_SAGA_GET_HOME_POSTS, getHomePosts),
 	])
 }
 
-function* getPosts() {
+function* getPosts(params) {
 	yield put({ type: POST_FETCH_DATA });
+	const getUrl = params.profileId ? `${url.getPost}/${params.profileId}` : url.getPost;
 	try {
-		const response = yield call(axios.get, url.getPost, { withCredentials: true });
+		const response = yield call(axios.get, getUrl, { withCredentials: true });
 		const { posts, msg } = response.data;
 		if (msg === "success") yield put({ type: POST_FETCH_SUCCESS, payload: posts.posts });
 		else if (msg === "fail") yield put({ type: POST_FETCH_FAIL, payload: "some server error occured." });

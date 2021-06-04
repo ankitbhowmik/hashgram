@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router'
 
 import ResponsiveImg from '../../atom/ResponsiveImg/ResponsiveImg'
 //import Rectangle from '../../atom/Skeleton/Rectangle'
@@ -31,6 +32,7 @@ const LoadingPost = () => (
 */
 
 const Post = ({ post_id, likes, comments, image, caption, author }) => {
+    const history = useHistory();
 
     const [showViewModal, setShowViewModal] = useState(false);
     return (
@@ -40,7 +42,9 @@ const Post = ({ post_id, likes, comments, image, caption, author }) => {
                     size="small"
                     image={author.profileImage ? `${process.env.REACT_APP_HOST_URL}${author.profileImage}` : "/noPic.png"}
                 />
-                <NameText>
+                <NameText
+                    onClick={() => history.push(`/acc/profile/${author._id}`)}
+                >
                     {author.fullname} <br />
                     <Span color="gray">{author.email}</Span>
                 </NameText>

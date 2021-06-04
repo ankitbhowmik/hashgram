@@ -9,14 +9,16 @@ import FlexBox from '../../atom/Box/Flex';
 import Avatar from '../../atom/Avatar/Avatar';
 import Button from '../../atom/button/Button';
 import EditProfileModal from '../../modals/EditProfileModal/EditProfileModal';
-import { LOGOUT_SAGA_REQUEST, USER_SET_PROFILE_IMAGE } from '../../../redux/user/user.type';
+import { USER_SAGA_LOGOUT_REQUEST, USER_SET_PROFILE_IMAGE } from '../../../redux/user/user.type';
 
 import { RightDiv, Text, TextSmall } from './ProfileTop.style';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const avatarHoverStyle = { opacity: 0.4, transition: "0.4s" };
 
-const ProfileTop = (props) => {
+const ProfileTop = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [editProfileIsOpen, setEditProfileIsOpen] = useState(false);
     const [AvatarHover, setAvatarHover] = useState(false);
     const [editImgSrc, setEditImgSrc] = useState("");
@@ -24,11 +26,12 @@ const ProfileTop = (props) => {
 
     const {
         bio,
-        userId,
         fullname,
         profileImage,
         followings,
         followers,
+        userId,
+        profileId,
         posts
     } = useSelector(state => state.user);
 
@@ -45,7 +48,6 @@ const ProfileTop = (props) => {
     const onUploadProfileImg = async () => {
         const formdata = new FormData();
         formdata.append("newProfileImg", editImg, editImg.name);
-        formdata.append("userId", userId);
         try {
             const res = await axios.post(url.uploadProfileImage, formdata, { withCredentials: true });
             if (res.data.msg === "success") {
@@ -60,6 +62,11 @@ const ProfileTop = (props) => {
             console.log("error occured");
             alert("please enter proper image file less than 1mb size");
         }
+    }
+
+    const sendMessage = () => {
+        history.push("/acc/message");
+        //dispatch({type: })
     }
 
     return (
@@ -93,23 +100,14 @@ const ProfileTop = (props) => {
             <RightDiv>
                 <div>
                     <Text>{fullname}</Text> &nbsp;
-                    <Button
-                        color="primary"
-                        onClick={() => setEditProfileIsOpen(true)}
-                    >
-                        Edit Profile
-                    </Button>
-                    <EditProfileModal
-                        modalIsOpen={editProfileIsOpen}
-                        closeModal={() => setEditProfileIsOpen(false)}
-                    />
-                    <Button
-                        color="gray"
-                        style={{ float: "right" }}
-                        onClick={() => dispatch({ type: LOGOUT_SAGA_REQUEST })}
-                    >
-                        Logout
-                    </Button>
+                    <EditProfileModal modalIsOpen={editProfileIsOpen} closeModal={() => setEditProfileIsOpen(false)} />
+                    {
+                        userId === profileId ? <>
+                            <Button color="primary" onClick={() => setEditProfileIsOpen(true)} > Edit Profile </Button>
+                            <Button color="gray" style={{ float: "right" }} onClick={() => dispatch({ type: USER_SAGA_LOGOUT_REQUEST })} >Logout</Button>
+                        </>
+                            : <Button style={{ marginLeft: 5 }} onClick={sendMessage}>Message</Button>
+                    }
                 </div>
                 <FlexBox plain style={{ justifyContent: "space-between" }}>
                     <TextSmall>{posts} Posts</TextSmall>

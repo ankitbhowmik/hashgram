@@ -4,20 +4,26 @@ import {
 	USER_FETCH_FAIL,
 	USER_LOGOUT,
 	USER_SET_PROFILE_IMAGE,
-	USER_SET_EDIT_PROFILE
+	USER_SET_EDIT_PROFILE,
+	USER_SET_SEARCH_LOADING,
+	USER_SET_SEARCH,
+	USER_SET_PROFILE_DATA
 } from './user.type.js';
 
 const initialState = {
 	email: "",
 	userId: "",
+	profileId: "",		//use this id to show data in profile page.
 	error: null,
 	loading: true,
 	fullname: "",
 	profileImage: "",
-	followings:0,
-	followers:0,
-	posts:0,
-	bio:"",
+	followings: 0,
+	followers: 0,
+	posts: 0,
+	bio: "",
+	search: [],
+	searchLoading: false,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -32,14 +38,7 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				error: null,
 				loading: false,
-				bio: action.payload.bio,
-				userId: action.payload._id,
-				posts: action.payload.posts,
-				email: action.payload.email,
-				fullname: action.payload.fullname,
-				followers: action.payload.followers,
-				followings: action.payload.followings,
-				profileImage: action.payload.profileImage,
+				userId: action.payload
 			}
 		case USER_FETCH_FAIL:
 			return {
@@ -52,17 +51,39 @@ const userReducer = (state = initialState, action) => {
 				...initialState,
 				loading: false,
 			}
-		case USER_SET_PROFILE_IMAGE: 
+		case USER_SET_PROFILE_IMAGE:
 			return {
 				...state,
-				profileImage: `${process.env.REACT_APP_HOST_URL}${action.value}`
+				profileImage: action.value,
 			}
-		case USER_SET_EDIT_PROFILE :
-			return{
+		case USER_SET_EDIT_PROFILE:
+			return {
 				...state,
 				bio: action.bio,
-				fullname: action.fullname,
 				email: action.email,
+				fullname: action.fullname,
+			}
+		case USER_SET_SEARCH_LOADING:
+			return {
+				...state,
+				searchLoading: action.value,
+			}
+		case USER_SET_SEARCH:
+			return {
+				...state,
+				search: action.search
+			}
+		case USER_SET_PROFILE_DATA:
+			return {
+				...state,
+				bio: action.payload.bio,
+				email: action.payload.email,
+				followers: action.payload.followers,
+				followings: action.payload.followings,
+				fullname: action.payload.fullname,
+				posts: action.payload.posts,
+				profileImage: action.payload.profileImage,
+				profileId: action.payload._id,
 			}
 		default:
 			return state

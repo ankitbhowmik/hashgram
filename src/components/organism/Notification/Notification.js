@@ -5,28 +5,30 @@ import { useSelector } from 'react-redux';
 import Like from '../../atom/Icons/Like/Like'
 import PropTypes from 'prop-types';
 
-import {StyledBox,
-    Triangle} from './Notification.style';
+import {
+    StyledBox,
+    Triangle
+} from './Notification.style';
 
-const EmptyNotification = ()=>{
+const EmptyNotification = () => {
     return (
         <>
-            <Like/>
+            <Like />
             <p>Activity On Your Posts</p>
             <p>When someone likes or comments on one of your posts, you'll see it here.</p>
         </>
     )
 }
 
-const Notification = ({notifications=[]}) => {
-    const notification = useSelector(state=> state.notification);
+const Notification = ({ notifications = [] }) => {
+    const notification = useSelector(state => state.notification);
     return (
         <StyledBox show={notification.show} width="400px">
-            <Triangle/>
+            <Triangle right="80px" />
             {
-                notifications.length === 0 
-                ? <EmptyNotification/>
-                : <h1>some notification</h1>
+                notifications.length === 0
+                    ? <EmptyNotification />
+                    : <h1>some notification</h1>
             }
         </StyledBox>
     )

@@ -8,12 +8,20 @@ import SinglePostImg from '../../molecule/SinglePostImg/SinglePostImg';
 import AddPostModal from '../../modals/AddPostModal/AddPostModal';
 
 import { POST_SAGA_GET_POSTS } from '../../../redux/post/post.type';
+import { useLocation, useParams } from 'react-router-dom';
+import { USER_SAGA_GET_PROFILE_DATA } from '../../../redux/user/user.type';
 
 const Profile = () => {
     const dispatch = useDispatch();
+    const { profileId } = useParams();
+    const location = useLocation();
+    const { userId, profileId: profile_id } = useSelector(state => state.user);
+
+
     useEffect(() => {
-        dispatch({ type: POST_SAGA_GET_POSTS });
-    }, [dispatch])
+        dispatch({ type: USER_SAGA_GET_PROFILE_DATA, profileId });
+        dispatch({ type: POST_SAGA_GET_POSTS, profileId });
+    }, [dispatch, location.pathname])
 
     const { posts } = useSelector(state => state.post);
 
@@ -23,10 +31,12 @@ const Profile = () => {
         <div className="a-container m-auto">
             <ProfileTop style={{ margin: "0 auto" }} />
             <br />
-            <Add
-                className="a-add-post-icon"
-                onClick={() => setIsOpen(true)}
-            />
+            {
+                userId === profile_id && (<Add
+                    className="a-add-post-icon"
+                    onClick={() => setIsOpen(true)}
+                />)
+            }
             <AddPostModal
                 modalIsOpen={modalIsOpen}
                 closeModal={() => setIsOpen(false)}

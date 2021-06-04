@@ -1,13 +1,13 @@
-import {all} from 'redux-saga/effects';
-import { notificationWatcher } from './Notification/Notification.saga';
+import { all } from 'redux-saga/effects';
 import { userWatcher } from './user/user.saga';
 import { postWatcher } from './post/post.saga';
+import { notificationWatcher } from './Notification/Notification.saga';
 
-function* rootSaga(){
+function* rootSaga() {
     yield all([
-        notificationWatcher(),
         userWatcher(),
         postWatcher(),
+        notificationWatcher(),
     ])
 }
 

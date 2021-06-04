@@ -5,7 +5,11 @@ const url = {
 	login: `${host}/user/login`,
 	logout: `${host}/user/logout`,
 	verifyToken: `${host}/user/verify-token`,
-	uploadProfileImage: `${host}/user/upload-profile-image`,
+	searchUser: `${host}/user/search-user/`,
+
+	uploadProfileImage: `${host}/profile/upload-profile-image`,
+	getProfileData: `${host}/profile/get-profile-data`,
+
 	editProfile: `${host}/profile/edit-profile`,
 	uploadPost: `${host}/post/upload`,
 	getPost: `${host}/post/get-user-posts`,

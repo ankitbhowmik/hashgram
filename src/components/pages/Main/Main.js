@@ -9,26 +9,26 @@ import Message from '../../template/Message/Message';
 // this peoples and posts is just to mock data from backend
 //remove it when backend is completed
 const peoples = [
-    {image: "/DSC_0011.JPG", name:"Ankit", username: "ankit.bhowmik"},
-    {image: null, name:"Rohan", username:"rohan.das"},
-    {image: "/DSC_0011.JPG", name:"lens", username:"lenscart"}
+    { image: "/DSC_0011.JPG", name: "Ankit", username: "ankit.bhowmik" },
+    { image: null, name: "Rohan", username: "rohan.das" },
+    { image: "/DSC_0011.JPG", name: "lens", username: "lenscart" }
 ];
 
-const Main = ({people=peoples}) => {
-    const {path} = useRouteMatch();
+const Main = ({ people = peoples }) => {
+    const { path } = useRouteMatch();
     return (
         <>
-            <Navbar/>
-            <br/>
+            <Navbar />
+            <br />
             <Switch>
                 <Route path={`${path}/home`}>
-                    <Home people={people}/>
+                    <Home people={people} />
                 </Route>
-                <Route path={`${path}/profile`}>
+                <Route path={`${path}/profile/:profileId?`}>
                     <Profile />
                 </Route>
                 <Route path={`${path}/message`}>
-                    <Message/>
+                    <Message />
                 </Route>
             </Switch>
         </>

@@ -3,23 +3,30 @@ import { takeEvery, all, put, call, takeLatest } from 'redux-saga/effects';
 
 import url from '../../constant/url'
 import {
-	USER_SAGA_FETCH,
-	USER_FETCH_DATA,
-	USER_FETCH_SUCCESS,
-	USER_FETCH_FAIL,
-	USER_SAGA_VERIFY_TOKEN,
 	USER_LOGOUT,
+	USER_FETCH_DATA,
+	USER_FETCH_FAIL,
+	USER_SAGA_FETCH,
+	USER_FETCH_SUCCESS,
+	USER_SAGA_LOGOUT_REQUEST,
 	USER_SET_EDIT_PROFILE,
-	LOGOUT_SAGA_REQUEST,
 	USER_SAGA_EDIT_PROFILE,
+	USER_SAGA_VERIFY_TOKEN,
+	USER_SAGA_GET_SEARCHS,
+	USER_SET_SEARCH_LOADING,
+	USER_SET_SEARCH,
+	USER_SAGA_GET_PROFILE_DATA,
+	USER_SET_PROFILE_DATA,
 } from './user.type.js';
 
 export function* userWatcher() {
 	yield all([
 		takeEvery(USER_SAGA_FETCH, fetchUser),
+		takeEvery(USER_SAGA_LOGOUT_REQUEST, logout),
 		takeEvery(USER_SAGA_VERIFY_TOKEN, verifyToken),
-		takeEvery(LOGOUT_SAGA_REQUEST, logout),
 		takeLatest(USER_SAGA_EDIT_PROFILE, editProfile),
+		takeEvery(USER_SAGA_GET_SEARCHS, getSearch),
+		takeLatest(USER_SAGA_GET_PROFILE_DATA, getProfileData),
 	])
 }
 
@@ -30,7 +37,7 @@ function* fetchUser(params) {
 		const res = yield call(axios.post, url.login, data, { withCredentials: true });
 
 		if (res.data.msg === "success")
-			yield put({ type: USER_FETCH_SUCCESS, payload: res.data.doc });
+			yield put({ type: USER_FETCH_SUCCESS, payload: res.data.userId });
 		else
 			yield put({ type: USER_FETCH_FAIL, payload: res.data.err });
 
@@ -75,3 +82,20 @@ function* editProfile(params) {
 	}
 }
 
+function* getSearch(params) {
+	const { searchText } = params;
+	yield put({ type: USER_SET_SEARCH_LOADING, value: true });
+	const response = yield call(axios.post, url.searchUser, { search: searchText }, { withCredentials: true });
+	yield put({ type: USER_SET_SEARCH, search: response.data });
+	yield put({ type: USER_SET_SEARCH_LOADING, value: false });
+}
+
+function* getProfileData(params) {
+	const getUrl = params.profileId ? `${url.getProfileData}/${params.profileId}` : url.getProfileData;
+	const response = yield call(axios.get, getUrl, { withCredentials: true });
+	if (response.data.msg === "success") {
+		yield put({ type: USER_SET_PROFILE_DATA, payload: response.data.data });
+	} else {
+		console.log("something went wrong");
+	}
+}
