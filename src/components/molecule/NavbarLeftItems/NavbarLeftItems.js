@@ -8,7 +8,7 @@ import Like from '../../atom/Icons/Like/Like';
 import Profile from '../../atom/Icons/Profile/Profile';
 import Message from '../../atom/Icons/Message/Message';
 import Notification from '../../organism/Notification/Notification';
-import { toggleNotification } from '../../../redux/Notification/Notification.type';
+import { toggleNotification } from '../../../redux/notification/Notification.type';
 
 import {
     StyledFlexBox,

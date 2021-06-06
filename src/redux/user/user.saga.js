@@ -35,11 +35,17 @@ function* fetchUser(params) {
 	yield put({ type: USER_FETCH_DATA });
 	try {
 		const res = yield call(axios.post, url.login, data, { withCredentials: true });
-
-		if (res.data.msg === "success")
-			yield put({ type: USER_FETCH_SUCCESS, payload: res.data.userId });
-		else
+		if (res.data.msg === "success") {
+			yield put({
+				type: USER_FETCH_SUCCESS,
+				userId: res.data.userId,
+				fullname: res.data.fullname,
+				email: res.data.email,
+				profileImage: res.data.profileImage,
+			});
+		} else {
 			yield put({ type: USER_FETCH_FAIL, payload: res.data.err });
+		}
 
 	} catch (err) {
 		yield put({ type: USER_FETCH_FAIL, payload: "SOME SERVER ERROR OCCURED" });
@@ -50,9 +56,20 @@ function* verifyToken() {
 	yield put({ type: USER_FETCH_DATA });
 	const verifyToken = yield call(axios.get, url.verifyToken, { withCredentials: true });
 	const { auth, data } = verifyToken.data;
-	if (auth === "success") yield put({ type: USER_FETCH_SUCCESS, payload: data });
-	else if (auth === "fail") yield put({ type: USER_FETCH_FAIL, payload: "" });
-	else yield put({ type: USER_FETCH_FAIL, payload: "SOME SERVER ERROR OCCURED" });
+	if (auth === "success") {
+		yield put({
+			type: USER_FETCH_SUCCESS,
+			userId: data._id,
+			fullname: data.fullname,
+			email: data.email,
+			profileImage: data.profileImage,
+		});
+	}
+	else if (auth === "fail") {
+		yield put({ type: USER_FETCH_FAIL, payload: "" });
+	} else {
+		yield put({ type: USER_FETCH_FAIL, payload: "SOME SERVER ERROR OCCURED" });
+	}
 }
 
 function* logout() {

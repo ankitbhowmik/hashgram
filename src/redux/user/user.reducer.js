@@ -11,19 +11,24 @@ import {
 } from './user.type.js';
 
 const initialState = {
-	email: "",
-	userId: "",
-	profileId: "",		//use this id to show data in profile page.
 	error: null,
 	loading: true,
-	fullname: "",
-	profileImage: "",
-	followings: 0,
-	followers: 0,
-	posts: 0,
-	bio: "",
 	search: [],
+	userId: "",
+	userEmail: "",
+	userFullName: "",
+	userProfileImage: "",
 	searchLoading: false,
+	profileData: {
+		bio: "",
+		email: "",
+		followers: 0,
+		followings: 0,
+		fullname: "",
+		posts: 0,
+		profileImage: "",
+		profileId: "",
+	},
 }
 
 const userReducer = (state = initialState, action) => {
@@ -38,7 +43,10 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				error: null,
 				loading: false,
-				userId: action.payload
+				userId: action.userId,
+				userEmail: action.email,
+				userFullName: action.fullname,
+				userProfileImage: action.profileImage,
 			}
 		case USER_FETCH_FAIL:
 			return {
@@ -76,14 +84,16 @@ const userReducer = (state = initialState, action) => {
 		case USER_SET_PROFILE_DATA:
 			return {
 				...state,
-				bio: action.payload.bio,
-				email: action.payload.email,
-				followers: action.payload.followers,
-				followings: action.payload.followings,
-				fullname: action.payload.fullname,
-				posts: action.payload.posts,
-				profileImage: action.payload.profileImage,
-				profileId: action.payload._id,
+				profileData: {
+					bio: action.payload.bio,
+					posts: action.payload.posts,
+					email: action.payload.email,
+					profileId: action.payload._id,
+					fullname: action.payload.fullname,
+					followers: action.payload.followers,
+					followings: action.payload.followings,
+					profileImage: action.payload.profileImage,
+				}
 			}
 		default:
 			return state

@@ -1,31 +1,50 @@
-import React from 'react'
-import Send from '../../atom/Icons/Send/Send'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { CHAT_SAGA_SEND_MESSAGE } from '../../../redux/chat/chat.type';
 
-import {Chat,
+import Send from '../../atom/Icons/Send/Send'
+import {
+    Chat,
     ChatBox,
     ChatInputs,
     StyledInput,
     StyledButton,
     Msg,
-    MsgText} from './Chat.style';
+    MsgText
+} from './Chat.style';
 
 
 const ChatArea = () => {
+    const { messages } = useSelector(state => state.chat);
+    const { userId } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const [messageText, setMessageText] = useState("");
+
+    const sendMessage = (e) => {
+        e.preventDefault();
+        dispatch({ type: CHAT_SAGA_SEND_MESSAGE, messageText });
+        setMessageText("");
+    };
+
     return (
         <Chat>
             <ChatBox>
-                <Msg><MsgText me>hello</MsgText></Msg>
-                <Msg><MsgText other>hello1</MsgText></Msg>
-                <Msg><MsgText me>hello2</MsgText></Msg>
-                <Msg><MsgText other>hello3</MsgText></Msg>
-                <Msg><MsgText other>hello4</MsgText></Msg>
+                {
+                    messages.map(msg => (
+                        <Msg key={msg._id}><MsgText own={msg.from === userId}>{msg.msg}</MsgText></Msg>
+                    ))
+                }
             </ChatBox>
-            <ChatInputs>
-                <StyledInput 
-                    placeholder="Message ;)"
-                />
-                <StyledButton type="submit"><Send/></StyledButton>
-            </ChatInputs>
+            <form onSubmit={sendMessage}>
+                <ChatInputs>
+                    <StyledInput
+                        placeholder="Message ;)"
+                        value={messageText}
+                        onChange={(e) => setMessageText(e.target.value)}
+                    />
+                    <StyledButton type="submit"><Send /></StyledButton>
+                </ChatInputs>
+            </form>
         </Chat>
     )
 }

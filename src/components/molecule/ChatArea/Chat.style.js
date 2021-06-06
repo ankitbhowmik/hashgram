@@ -30,7 +30,7 @@ export const ChatInputs = styled.div`
     right:10px;
 `
 
-export const StyledInput = styled.input.attrs(props=> ({
+export const StyledInput = styled.input.attrs(props => ({
     type: "text"
 }))`
     flex-grow: 1;
@@ -53,15 +53,12 @@ export const Msg = styled.div`
 export const MsgText = styled.span`
     padding:10px 25px;
     border-radius: 25px;
-    ${
-        prop=> prop.me && css`
+    ${prop => prop.own
+        ? css`
             background-color: dodgerblue;
             float: right;
         `
+        : css`background-color: yellow;`
     }
-    ${
-        prop=> prop.other && css`
-            background-color: yellow;
-        `
-    }
+
 `

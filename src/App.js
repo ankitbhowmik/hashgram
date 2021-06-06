@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Main from './components/pages/Main/Main';
 import Login from './components/pages/Login/Login';
@@ -12,16 +12,11 @@ import { USER_SAGA_VERIFY_TOKEN } from './redux/user/user.type';
 
 const App = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const { userId } = useSelector(state => state.user);
 
     //apply dispatch for verfiy token from backend '/user/verify-token'
     useEffect(() => {
         dispatch({ type: USER_SAGA_VERIFY_TOKEN });
-        if (!userId) {
-            history.push("/login")
-        }
-    }, [dispatch, userId, history]);
+    }, [dispatch]);
 
     return (
         <div className="a-container">

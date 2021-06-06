@@ -13,6 +13,7 @@ import { USER_SAGA_LOGOUT_REQUEST, USER_SET_PROFILE_IMAGE } from '../../../redux
 
 import { RightDiv, Text, TextSmall } from './ProfileTop.style';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { CHAT_SAGA_CREATE_CONVERSATION } from '../../../redux/chat/chat.type';
 
 const avatarHoverStyle = { opacity: 0.4, transition: "0.4s" };
 
@@ -24,16 +25,7 @@ const ProfileTop = () => {
     const [editImgSrc, setEditImgSrc] = useState("");
     const [editImg, setEditImg] = useState("");
 
-    const {
-        bio,
-        fullname,
-        profileImage,
-        followings,
-        followers,
-        userId,
-        profileId,
-        posts
-    } = useSelector(state => state.user);
+    const { userId, profileData } = useSelector(state => state.user);
 
     function onEditImgChange(event) {
         setEditImgSrc(URL.createObjectURL(event.target.files[0]));
@@ -65,8 +57,8 @@ const ProfileTop = () => {
     }
 
     const sendMessage = () => {
+        dispatch({ type: CHAT_SAGA_CREATE_CONVERSATION, profileId: profileData.profileId });
         history.push("/acc/message");
-        //dispatch({type: })
     }
 
     return (
@@ -78,7 +70,7 @@ const ProfileTop = () => {
             >
                 <Avatar
                     size="large"
-                    image={editImgSrc || (profileImage ? `${process.env.REACT_APP_HOST_URL}${profileImage}` : "/noPic.png")}
+                    image={editImgSrc || (profileData.profileImage ? `${process.env.REACT_APP_HOST_URL}${profileData.profileImage}` : "/noPic.png")}
                     style={AvatarHover ? avatarHoverStyle : {}}
                 />
                 <input
@@ -99,10 +91,10 @@ const ProfileTop = () => {
             </div>
             <RightDiv>
                 <div>
-                    <Text>{fullname}</Text> &nbsp;
+                    <Text>{profileData.fullname}</Text> &nbsp;
                     <EditProfileModal modalIsOpen={editProfileIsOpen} closeModal={() => setEditProfileIsOpen(false)} />
                     {
-                        userId === profileId ? <>
+                        userId === profileData.profileId ? <>
                             <Button color="primary" onClick={() => setEditProfileIsOpen(true)} > Edit Profile </Button>
                             <Button color="gray" style={{ float: "right" }} onClick={() => dispatch({ type: USER_SAGA_LOGOUT_REQUEST })} >Logout</Button>
                         </>
@@ -110,12 +102,12 @@ const ProfileTop = () => {
                     }
                 </div>
                 <FlexBox plain style={{ justifyContent: "space-between" }}>
-                    <TextSmall>{posts} Posts</TextSmall>
-                    <TextSmall>{followers} Followers</TextSmall>
-                    <TextSmall>{followings} Following</TextSmall>
+                    <TextSmall>{profileData.posts} Posts</TextSmall>
+                    <TextSmall>{profileData.followers} Followers</TextSmall>
+                    <TextSmall>{profileData.followings} Following</TextSmall>
                 </FlexBox>
                 <div>
-                    <TextSmall style={{ marginLeft: 5 }}>{bio}</TextSmall>
+                    <TextSmall style={{ marginLeft: 5 }}>{profileData.bio}</TextSmall>
                 </div>
             </RightDiv>
         </Grid>

@@ -7,15 +7,21 @@ const url = {
 	verifyToken: `${host}/user/verify-token`,
 	searchUser: `${host}/user/search-user/`,
 
-	uploadProfileImage: `${host}/profile/upload-profile-image`,
-	getProfileData: `${host}/profile/get-profile-data`,
+	uploadProfileImage: `${host}/api/profile/upload-profile-image`,
+	getProfileData: `${host}/api/profile/get-profile-data`,
 
-	editProfile: `${host}/profile/edit-profile`,
-	uploadPost: `${host}/post/upload`,
-	getPost: `${host}/post/get-user-posts`,
-	getHomePost: `${host}/post/get-home-posts`,
-	changeLike: `${host}/post/change-like`,
-	addComment: `${host}/post/add-comment`,
+	editProfile: `${host}/api/profile/edit-profile`,
+	uploadPost: `${host}/api/post/upload`,
+	getPost: `${host}/api/post/get-user-posts`,
+	getHomePost: `${host}/api/post/get-home-posts`,
+	changeLike: `${host}/api/post/change-like`,
+	addComment: `${host}/api/post/add-comment`,
+
+	createChat: `${host}/api/chat/create`,
+	getChats: `${host}/api/chat/get-chats`,
+	getMessages: `${host}/api/chat/get-messages`,
+	sendMessage: `${host}/api/chat/send-message`,
+
 }
 
 export default url;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Grid from '../../atom/Box/Grid';
 import Add from '../../atom/Icons/Add/Add';
@@ -8,20 +9,19 @@ import SinglePostImg from '../../molecule/SinglePostImg/SinglePostImg';
 import AddPostModal from '../../modals/AddPostModal/AddPostModal';
 
 import { POST_SAGA_GET_POSTS } from '../../../redux/post/post.type';
-import { useLocation, useParams } from 'react-router-dom';
 import { USER_SAGA_GET_PROFILE_DATA } from '../../../redux/user/user.type';
 
 const Profile = () => {
     const dispatch = useDispatch();
     const { profileId } = useParams();
     const location = useLocation();
-    const { userId, profileId: profile_id } = useSelector(state => state.user);
+    const { userId, profileData } = useSelector(state => state.user);
 
 
     useEffect(() => {
         dispatch({ type: USER_SAGA_GET_PROFILE_DATA, profileId });
         dispatch({ type: POST_SAGA_GET_POSTS, profileId });
-    }, [dispatch, location.pathname])
+    }, [dispatch, location.pathname, profileId])
 
     const { posts } = useSelector(state => state.post);
 
@@ -32,7 +32,7 @@ const Profile = () => {
             <ProfileTop style={{ margin: "0 auto" }} />
             <br />
             {
-                userId === profile_id && (<Add
+                userId === profileData.profileId && (<Add
                     className="a-add-post-icon"
                     onClick={() => setIsOpen(true)}
                 />)

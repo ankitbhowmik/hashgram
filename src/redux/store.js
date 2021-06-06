@@ -4,8 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from "./rootSaga";
 import userReducer from './user/user.reducer';
 import postReducer from './post/post.reducer';
-import notificationReducer from "./Notification/Notification.reducer";
 import chatReducer from "./chat/chat.reducer";
+import notificationReducer from "./notification/Notification.reducer";
 
 const rootReducer = combineReducers({
     post: postReducer,

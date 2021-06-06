@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import People from '../../molecule/People/People';
 import { P } from '../../atom/Text/Text';
@@ -10,28 +11,30 @@ import {
     Div,
     Hoverable
 } from './Message.style';
-
-const people = [
-    { name: "ankit", username: "ankit.bhowmik", image: "/DSC_0011.JPG" },
-    { name: "ankit", username: "ankit.bhowmik", image: "/DSC_0011.JPG" },
-    { name: "ankit", username: "ankit.bhowmik", image: "/DSC_0011.JPG" },
-    { name: "ankit", username: "ankit.bhowmik", image: "/DSC_0011.JPG" },
-];
+import { CHAT_SAGA_GET_MESSAGES } from '../../../redux/chat/chat.type';
 
 const Message = () => {
+    const { chats, chatId } = useSelector(state => state.chat);
+    const { userFullName, userEmail, userProfileImage } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
+    const getChat = (chatId) => {
+        dispatch({ type: CHAT_SAGA_GET_MESSAGES, chatId })
+    };
+
     return (
         <StyledGrid col="1fr 2fr">
             <StyledDiv>
                 <Div>
-                    <P style={{ margin: 17 }} size="23px" className="center-text"> username </P>
+                    <P style={{ margin: 17 }} size="23px" className="center-text"> {userFullName} </P>
                 </Div>
                 {
-                    people.map((pep, index) => (<Hoverable key={index}>
+                    chats.map((pep, index) => (<Hoverable key={index}>
                         <People
-                            name={pep.name}
-                            username={pep.username}
-                            image={pep.image}
-                            onClick={() => console.log("done")}
+                            name={pep.fullname}
+                            username={pep.email}
+                            image={pep.profileImage}
+                            onClick={() => getChat(pep.chatId)}
                         />
                     </Hoverable>))
                 }
@@ -40,9 +43,9 @@ const Message = () => {
                 {/* only to be shown if a user is clicked */}
                 <div style={{ borderBottom: "1px solid lightgray" }}>
                     <People
-                        name="ankit"
-                        username="ankit.bhowmik"
-                        image={"/DSC_0011.JPG"}
+                        name={userFullName}
+                        username={userEmail}
+                        image={userProfileImage}
                     />
                 </div>
                 <ChatArea />
