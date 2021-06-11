@@ -14,7 +14,7 @@ import {
 import { CHAT_SAGA_GET_MESSAGES } from '../../../redux/chat/chat.type';
 
 const Message = () => {
-    const { chats, chatId } = useSelector(state => state.chat);
+    const { chats } = useSelector(state => state.chat);
     const { userFullName, userEmail, userProfileImage } = useSelector(state => state.user);
     const dispatch = useDispatch();
 

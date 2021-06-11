@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { H1, P } from '../../atom/Text/Text';
-import PostLike from '../../atom/Icons/PostLike/PostLike'
-import Comment from '../../atom/Icons/Comment/Comment'
+import PostLike from '../../atom/Icons/PostLike/PostLike';
+import Comment from '../../atom/Icons/Comment/Comment';
 import { InputComment, ButtonComment, CommentContainer, PostInfo } from './LikeComment.style';
 import { POST_SAGA_ADD_COMMENTS, POST_SAGA_CHANGE_LIKE } from '../../../redux/post/post.type';
 
-const LikeComment = ({ post_id, likes, comments, children }) => {
+const LikeComment = ({ post_id, likes, comments, children, noPostInfo }) => {
 	const dispatch = useDispatch();
 	const [comment, setComment] = useState("");
 	const [loader, setLoader] = useState(false);
@@ -24,17 +25,19 @@ const LikeComment = ({ post_id, likes, comments, children }) => {
 
 	return (
 		<>
-			<PostInfo>
-				<div>
-					<PostLike like={likes.includes(userId)} onClick={onClickPostLike} />
-					<Comment style={{ marginLeft: 16 }} />
-				</div>
-				<b>{likes.length} Likes</b>
-				{children}
-				<div>
-					{comments.slice(-2).map(dt => <P key={dt._id} m="0"> <b>{dt.user.fullname}</b> {dt.comment} </P>)}
-				</div>
-			</PostInfo>
+			{
+				!noPostInfo && (<PostInfo>
+					<div>
+						<PostLike like={likes.includes(userId)} onClick={onClickPostLike} />
+						<Comment style={{ marginLeft: 16 }} />
+					</div>
+					<b>{likes.length} Likes</b>
+					{children}
+					<div>
+						{comments.slice(-2).map(dt => <P key={dt._id} m="0"> <b>{dt.user.fullname}</b> {dt.comment} </P>)}
+					</div>
+				</PostInfo>)
+			}
 			<CommentContainer>
 				{
 					loader ?
@@ -57,6 +60,10 @@ const LikeComment = ({ post_id, likes, comments, children }) => {
 			</CommentContainer>
 		</>
 	)
+}
+
+LikeComment.propType = {
+	noPostInfo: PropTypes.boolean
 }
 
 export default LikeComment;

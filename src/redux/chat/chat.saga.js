@@ -1,8 +1,8 @@
-import { all, takeLatest, put, select, call } from "@redux-saga/core/effects";
+import { all, takeLatest, takeEvery, put, select, call } from "@redux-saga/core/effects";
 import axios from "axios";
 import url from "../../constant/url";
 
-import { CHAT_ADD_NEW_CHAT, CHAT_SAGA_CREATE_CONVERSATION, CHAT_ADD_NEW_MESSAGE, CHAT_SAGA_GET_CHATS, CHAT_SAGA_GET_MESSAGES, CHAT_SAGA_SEND_MESSAGE, CHAT_SET_CHATS, CHAT_SET_MESSAGES } from "./chat.type";
+import { CHAT_ADD_NEW_CHAT, CHAT_SAGA_CREATE_CONVERSATION, CHAT_ADD_NEW_MESSAGE, CHAT_SAGA_GET_CHATS, CHAT_SAGA_GET_MESSAGES, CHAT_SAGA_SEND_MESSAGE, CHAT_SET_CHATS, CHAT_SET_MESSAGES, CHAT_SAGA_GET_SOCKET_MESSAGE } from "./chat.type";
 
 export function* chatWatcher() {
     yield all([
@@ -10,6 +10,7 @@ export function* chatWatcher() {
         takeLatest(CHAT_SAGA_GET_MESSAGES, getMessages),
         takeLatest(CHAT_SAGA_SEND_MESSAGE, sendMessage),
         takeLatest(CHAT_SAGA_CREATE_CONVERSATION, createChat),
+        takeEvery(CHAT_SAGA_GET_SOCKET_MESSAGE, getSocketMessage),
     ])
 }
 
@@ -33,14 +34,24 @@ function* getChats() {
 function* getMessages({ chatId }) {
     const response = yield call(axios.post, url.getMessages, { chatId }, { withCredentials: true });
     if (response.data.msg === "success") {
-        yield put({ type: CHAT_SET_MESSAGES, messages: response.data.chat, chatId });
+        yield put({ type: CHAT_SET_MESSAGES, messages: response.data.chat, chatId, receiverId: response.data.receiverId });
     }
 }
 
-function* sendMessage({ messageText }) {
+function* sendMessage({ messageText, callback }) {
     const { chat: { chatId } } = yield select();
     const response = yield call(axios.post, url.sendMessage, { msg: messageText, chatId }, { withCredentials: true });
     if (response.data.msg === "success") {
         yield put({ type: CHAT_ADD_NEW_MESSAGE, message: response.data.message })
+        if (callback) callback(response.data.message._id);
+    }
+}
+
+function* getSocketMessage({ chatId, message }) {
+    const { chat } = yield select();
+    if (chat.chatId === chatId) {
+        yield put({ type: CHAT_ADD_NEW_MESSAGE, message })
+    } else {
+        //some notification for new message
     }
 }

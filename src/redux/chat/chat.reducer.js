@@ -25,6 +25,7 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chatId: action.chatId,
+                receiverId: action.receiverId,
                 messages: [...action.messages],
             }
         case CHAT_ADD_NEW_MESSAGE:

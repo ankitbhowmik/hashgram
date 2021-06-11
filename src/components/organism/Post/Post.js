@@ -57,7 +57,7 @@ const Post = ({ post_id, likes, comments, image, caption, author }) => {
                 <P m="0">{caption}</P>
                 <P color="gray" m="0" onClick={() => setShowViewModal(true)}>View all {comments.length} comments</P>
             </CommentBox>
-            <ViewPostModal modalIsOpen={showViewModal} closeModal={() => setShowViewModal(false)} />
+            <ViewPostModal modalIsOpen={showViewModal} post_id={post_id} likes={likes} comments={comments} comments={comments} closeModal={() => setShowViewModal(false)} />
         </Border>
     )
 }

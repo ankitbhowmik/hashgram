@@ -28,12 +28,13 @@ const NavbarLeftItems = () => {
                 <Message />
             </Link>
 
-            <RelativeDiv>
+            {/* will add in next release*/}
+            {/* <RelativeDiv>
                 <Like onClick={() => dispatch(toggleNotification())} />
                 <AbsoluteDiv>
                     <Notification />
                 </AbsoluteDiv>
-            </RelativeDiv>
+            </RelativeDiv> */}
 
             <Link to={`${url}/profile`}>
                 <Profile />

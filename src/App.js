@@ -9,6 +9,7 @@ import Footer from './components/organism/Footer/Footer';
 import ProtectedRoute from './components/molecule/utils/ProtectedRoute';
 
 import { USER_SAGA_VERIFY_TOKEN } from './redux/user/user.type';
+import SocketProvider from './helpers/socket';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,11 @@ const App = () => {
             <Switch>
                 <Route path="/login"><Login /></Route>
                 <Route path="/signup"><Signup /></Route>
-                <ProtectedRoute path="/acc"><Main /></ProtectedRoute>
+                <ProtectedRoute path="/acc">
+                    <SocketProvider>
+                        <Main />
+                    </SocketProvider>
+                </ProtectedRoute>
                 <Route path="/"><Redirect to="/login" /></Route>
             </Switch>
             <Footer />
