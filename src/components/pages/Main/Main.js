@@ -40,7 +40,6 @@ const Main = ({ people = peoples }) => {
     return (
         <>
             <Navbar />
-            <br />
             <Switch>
                 <Route path={`${path}/home`}>
                     <Home people={people} />
